@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Life scheduler</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_tasks">Tasks</string>
+    <string name="title_activities">Activities</string>
+    <string name="title_records">Records</string>
+    <string name="title_together">Together</string>
+    <string name="title_settings">Settings</string>
+
+    <string name="done_btn">DONE</string>
+</resources>

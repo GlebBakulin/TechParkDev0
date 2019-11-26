@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_menu_task"
+        android:enabled="true"
+        android:icon="@drawable/list_icon"
+        android:title="@string/title_tasks"/>
+
+    <item
+        android:id="@+id/action_menu_action"
+        android:enabled="true"
+        android:icon="@drawable/list_icon"
+        android:title="@string/title_activities"/>
+
+    <item
+        android:id="@+id/action_menu_record"
+        android:enabled="true"
+        android:icon="@drawable/list_icon"
+        android:title="@string/title_records"/>
+
+    <item
+        android:id="@+id/action_menu_together"
+        android:enabled="false"
+        android:icon="@drawable/list_icon"
+        android:title="@string/title_together"/>
+
+    <item
+        android:id="@+id/action_menu_settings"
+        android:enabled="false"
+        android:icon="@drawable/list_icon"
+        android:title="@string/title_settings"/>
+
+</menu>

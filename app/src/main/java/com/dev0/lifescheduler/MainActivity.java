@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                startActivity(new Intent(MainActivity.this, StubActivity.class));  //Вход на пустую страницу, заглушка
+                                startActivity(new Intent(MainActivity.this, SecMainActivity.class));  //Вход на пустую страницу, заглушка
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {

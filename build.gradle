@@ -7,7 +7,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath 'com.android.tools.build:gradle:3.5.1'
 //        google()  // Google's Maven repository
         classpath 'com.google.gms:google-services:4.3.2'
         
@@ -23,6 +23,7 @@ allprojects {
         maven {
             url 'https://maven.google.com'
         }
+
     }
 }
 

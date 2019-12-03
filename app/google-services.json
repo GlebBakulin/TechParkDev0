@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "851253923883",
+    "firebase_url": "https://lifescheduler-3dafd.firebaseio.com",
+    "project_id": "lifescheduler-3dafd",
+    "storage_bucket": "lifescheduler-3dafd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851253923883:android:cf0d2596db6dc951b51a6e",
+        "android_client_info": {
+          "package_name": "com.dev0.lifescheduler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851253923883-oktn1i49m10us6urfbcv2h2f9ae52sn5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dev0.lifescheduler",
+            "certificate_hash": "3a00bebafeae4893429199b5ef2ff89fa18d448c"
+          }
+        },
+        {
+          "client_id": "851253923883-34v21cbkl4r85a7qgadpiqlflekh0tck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkup4GJpzYn3IOydw8rQrb1t-yeo5NFjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851253923883-34v21cbkl4r85a7qgadpiqlflekh0tck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

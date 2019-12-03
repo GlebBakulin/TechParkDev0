@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Life scheduler</string>
+    <string name="app_auth">Войдите или зарегистрируйтесь</string>
+    <string name="app_bottom">by dev0</string>
+    <string name="buttonSignIn">Вход</string>
+    <string name="buttonRegister">Регистрация</string>
+    <string name="title_activity_stub">StubActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>

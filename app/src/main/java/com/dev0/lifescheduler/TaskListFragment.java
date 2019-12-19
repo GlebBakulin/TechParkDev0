@@ -9,18 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dev0.lifescheduler.Models.AddTaskViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-interface TaskEventListener {
-    void handleEvent(Task task);
-}
-
-public class TaskListFragment extends Fragment implements TaskEventListener {
+public class TaskListFragment extends Fragment {
 
     private TaskDataAdapter mAdapter;
     private DBHelper mDbHelper;
@@ -42,6 +40,8 @@ public class TaskListFragment extends Fragment implements TaskEventListener {
 
         mAdapter = new TaskDataAdapter(mDbHelper.getAllTasks());
         recyclerView.setAdapter(mAdapter);
+        AddTaskViewModel addTaskVM = ViewModelProviders.of(getActivity()).get(AddTaskViewModel.class);
+        addTaskVM.setAdapter(mAdapter);
 
         FloatingActionButton addTaskButton = rootView.findViewById(R.id.action_add_task);
 
@@ -52,19 +52,14 @@ public class TaskListFragment extends Fragment implements TaskEventListener {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.task_add_container, AddTaskFragment.newInstance(this), "add_task")
+                    .add(R.id.task_add_container, new AddTaskFragment(), "add_task")
                     .commit()
         );
 
         return rootView;
     }
 
-    @Override
-    public void handleEvent(Task task) {
-        mAdapter.addTask(task);
-    }
-
-    class TaskDataAdapter extends RecyclerView.Adapter<TaskViewHolder> {
+    public class TaskDataAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         private ArrayList<Task> mTasks;
 
         public TaskDataAdapter() {
@@ -75,9 +70,13 @@ public class TaskListFragment extends Fragment implements TaskEventListener {
             mTasks = tasks;
         }
 
-        void addTask(Task task) {
+        public boolean contains(Task task) {
+            return mTasks.contains(task);
+        }
+
+        public void addTask(Task task) {
             mTasks.add(task);
-            task.setId(mDbHelper.insertTask(task.getName()));
+            task.setId(mDbHelper.insertTask(task));
             notifyDataSetChanged();
             notifyItemInserted(mTasks.size());
         }
@@ -102,7 +101,17 @@ public class TaskListFragment extends Fragment implements TaskEventListener {
         public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
             Task task = mTasks.get(position);
             holder.mName.setText(task.getName());
-            holder.mTaskDone.setOnClickListener(v -> removeTask(position));
+            holder.mDate.setText(task.getDate());
+            holder.mTime.setText(task.getTime());
+            holder.mTaskDoneBtn.setOnClickListener(v -> removeTask(position));
+            holder.mTaskEditBtn.setOnClickListener(v -> {
+                AddTaskViewModel vm = ViewModelProviders.of(getActivity()).get(AddTaskViewModel.class);
+                vm.setTask(task);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.task_add_container, new AddTaskFragment(), null)
+                        .commit();
+            });
         }
 
         @Override
@@ -114,14 +123,20 @@ public class TaskListFragment extends Fragment implements TaskEventListener {
     class TaskViewHolder extends RecyclerView.ViewHolder {
         private final TextView mName;
         private final TextView mDescription;
-        private final AppCompatButton mTaskDone;
+        private final TextView mTime;
+        private final TextView mDate;
+        private final AppCompatButton mTaskDoneBtn;
+        private final AppCompatButton mTaskEditBtn;
 
         TaskViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mName = itemView.findViewById(R.id.task_list_item_name);
             mDescription = null;
-            mTaskDone = itemView.findViewById(R.id.task_done_btn);
+            mDate = itemView.findViewById(R.id.task_list_item_date);
+            mTime = itemView.findViewById(R.id.task_list_item_time);
+            mTaskDoneBtn = itemView.findViewById(R.id.task_done_btn);
+            mTaskEditBtn = itemView.findViewById(R.id.task_edit_btn);
         }
     }
 }

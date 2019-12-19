@@ -12,15 +12,39 @@
         android:imeOptions="flagNoExtractUi"
         android:inputType="text"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/task_add_date_btn" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/task_add_done"
+        android:id="@+id/task_add_done_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=">>"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/title_task_add"
+        app:layout_constraintBottom_toBottomOf="@id/task_add_edit_text"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/task_add_date_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_task_date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/task_add_time_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_task_time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/task_add_date_btn" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/task_add_type_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_task_type_lax"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/task_add_time_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

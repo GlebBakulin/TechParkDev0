@@ -16,5 +16,13 @@
     <string name="title_together">Together</string>
     <string name="title_settings">Settings</string>
 
+    <string name="title_task_type_lax">LAX</string>
+    <string name="title_task_type_strict">STRICT</string>
+
+    <string name="title_task_time">TIME</string>
+    <string name="title_task_date">DATE</string>
+    <string name="title_task_add">>></string>
+
     <string name="done_btn">DONE</string>
+    <string name="edit_btn">EDIT</string>
 </resources>

@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.strictmode.SqliteObjectLeakedViolation;
-import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 class DBHelper extends SQLiteOpenHelper {
 
@@ -17,6 +16,14 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String TASKS_TABLE_NAME = "tasks";
     private static final String TASKS_COL_ID = "id";
     private static final String TASKS_COL_NAME = "name";
+
+    private static final String TASKS_COL_YEAR = "year";
+    private static final String TASKS_COL_MONTH = "month";
+    private static final String TASKS_COL_DAY = "day";
+    private static final String TASKS_COL_HOUR = "hour";
+    private static final String TASKS_COL_MINUTE = "minute";
+
+    private static final String TASKS_COL_IS_STRICT = "is_strict";
 
 
     DBHelper(Context context) {
@@ -28,7 +35,13 @@ class DBHelper extends SQLiteOpenHelper {
         db.execSQL(
                 "CREATE TABLE  " + TASKS_TABLE_NAME +
                 "(" + TASKS_COL_ID + " INTEGER PRIMARY KEY, "
-                        + TASKS_COL_NAME + " text)"
+                        + TASKS_COL_NAME + " TEXT, "
+                        + TASKS_COL_YEAR + " INTEGER, "
+                        + TASKS_COL_MONTH + " INTEGER, "
+                        + TASKS_COL_DAY + " INTEGER, "
+                        + TASKS_COL_HOUR + " INTEGER, "
+                        + TASKS_COL_MINUTE + " INTEGER, "
+                        + TASKS_COL_IS_STRICT + " INTEGER" + ")"
         );
     }
 
@@ -38,10 +51,20 @@ class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    long insertTask(String name) {
+    long insertTask(Task task) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(TASKS_COL_NAME, name);
+        Calendar cal = task.getCalendar();
+        cv.put(TASKS_COL_NAME, task.getName());
+        int isStrict = task.isStrict() ? 1 : 0;
+        cv.put(TASKS_COL_IS_STRICT, isStrict);
+
+        cv.put(TASKS_COL_YEAR, cal.get(Calendar.YEAR));
+        cv.put(TASKS_COL_MONTH, cal.get(Calendar.MONTH));
+        cv.put(TASKS_COL_DAY, cal.get(Calendar.DAY_OF_MONTH));
+        cv.put(TASKS_COL_HOUR, cal.get(Calendar.HOUR));
+        cv.put(TASKS_COL_MINUTE, cal.get(Calendar.MINUTE));
+
         return db.insert(TASKS_TABLE_NAME, null, cv);
     }
 
@@ -79,8 +102,20 @@ class DBHelper extends SQLiteOpenHelper {
             while (!cursor.isAfterLast()) {
                 String name = cursor.getString(cursor.getColumnIndex(TASKS_COL_NAME));
                 long id = cursor.getLong(cursor.getColumnIndex(TASKS_COL_ID));
+                boolean isStrict = cursor.getInt(cursor.getColumnIndex(TASKS_COL_IS_STRICT)) == 1;
 
-                taskList.add(new Task(name, id));
+                int year = cursor.getInt(cursor.getColumnIndex(TASKS_COL_YEAR));
+                int month = cursor.getInt(cursor.getColumnIndex(TASKS_COL_MONTH));
+                int day = cursor.getInt(cursor.getColumnIndex(TASKS_COL_DAY));
+                int hour = cursor.getInt(cursor.getColumnIndex(TASKS_COL_HOUR));
+                int minute = cursor.getInt(cursor.getColumnIndex(TASKS_COL_MINUTE));
+
+                Task task = new Task(name, id);
+                task.setDate(year, month, day);
+                task.setTime(hour, minute);
+
+                task.setStrict(isStrict);
+                taskList.add(task);
 
                 cursor.moveToNext();
             }

@@ -118,8 +118,8 @@ public class ActionListFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putLong(TimerActivity.KEY_ACTION_ID, mActions.get(getAdapterPosition()).id);
-                        startActivity(new Intent().putExtras(bundle));
+                        bundle.putLong(TimerActivity.KEY_ACTION_ID, mActions.get(getAdapterPosition()).getId());
+                        startActivity(new Intent(getContext(), TimerActivity.class).putExtras(bundle));
                     }
                 });
 

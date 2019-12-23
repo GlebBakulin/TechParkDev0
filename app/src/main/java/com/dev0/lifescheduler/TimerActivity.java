@@ -42,8 +42,8 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.timer_activity);
+        action = new ActionEntity();
         Bundle bundle = new Bundle();
         action.setId(bundle.getLong(KEY_ACTION_ID));
 
@@ -226,7 +226,7 @@ public class TimerActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
-        mStartTimeInMillis = prefs.getLong("startTimeInMilis", 600000);
+        mStartTimeInMillis = prefs.getLong("startTimeInMillis", 600000);
         mTimeLeftInMillis = prefs.getLong("millisLeft", mStartTimeInMillis);
         mTimerRunning = prefs.getBoolean("timerRunning", false);
 //        mTimeLeftInMillis = prefs.getLong("endTime", mEndTime);

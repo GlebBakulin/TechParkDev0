@@ -5,14 +5,14 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class ActionEntity {
-    @PrimaryKey
-    public int id;
+    @PrimaryKey(autoGenerate = true)
+    public long id;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

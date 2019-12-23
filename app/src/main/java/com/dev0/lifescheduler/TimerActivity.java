@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dev0.lifescheduler.database.database.ActionDB;
 import com.dev0.lifescheduler.database.entity.ActionEntity;
 
 import java.util.Locale;
@@ -44,7 +45,8 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Bundle bundle = new Bundle();
-        bundle.getInt(KEY_ACTION_ID);
+        action.setId(bundle.getInt(KEY_ACTION_ID));
+
 
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
         mButtonStartPause = findViewById(R.id.button_start_pause);
@@ -93,7 +95,9 @@ public class TimerActivity extends AppCompatActivity {
         mButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApplicationScheduler.getInstance().getDatabase().actionDao().update();
+                action.setActionName(mTimerActivityName.getText().toString());
+                action.setActionName(mTimerActivityComment.getText().toString());
+                ActionDB.getDB().actionDao().update(action);
             }
         });
 

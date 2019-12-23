@@ -37,7 +37,7 @@ public class TimerActivity extends AppCompatActivity {
     private long mEndTime;
 
     private ActionEntity action;
-    private static final String KEY_ACTION_ID = "ACTION_ID";
+    public static final String KEY_ACTION_ID = "ACTION_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

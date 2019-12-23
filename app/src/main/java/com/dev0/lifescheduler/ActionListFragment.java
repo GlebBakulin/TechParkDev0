@@ -1,7 +1,7 @@
 package com.dev0.lifescheduler;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +60,7 @@ public class ActionListFragment extends Fragment {
         outState.putInt("size", mAdapter.getItemCount());
     }
 
-    class ActionDataAdapter extends RecyclerView.Adapter<ActionViewHolder> {
+    class ActionDataAdapter extends RecyclerView.Adapter<ActionDataAdapter.ActionViewHolder> {
         private List<ActionEntity> mActions;
 
         ActionDataAdapter() {
@@ -104,17 +104,28 @@ public class ActionListFragment extends Fragment {
         public int getItemCount() {
             return mActions.size();
         }
-    }
 
-    class ActionViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mName;
-        private final TextView mDescription;
 
-        ActionViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public class ActionViewHolder extends RecyclerView.ViewHolder {
+            private final TextView mName;
+            private final TextView mDescription;
 
-            mName = itemView.findViewById(R.id.action_list_item_name);
-            mDescription = itemView.findViewById(R.id.action_list_item_description);
+            ActionViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                // TODO Переписать красиво
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putLong(TimerActivity.KEY_ACTION_ID, mActions.get(getAdapterPosition()).id);
+                        startActivity(new Intent().putExtras(bundle));
+                    }
+                });
+
+                mName = itemView.findViewById(R.id.action_list_item_name);
+                mDescription = itemView.findViewById(R.id.action_list_item_description);
+            }
         }
     }
 }

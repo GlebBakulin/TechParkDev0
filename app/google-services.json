@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "851253923883-9fhs0d3e8mjhqpn8j34osueoek40gi0m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dev0.lifescheduler",
+            "certificate_hash": "4b2bac31bc038263bfbbde2d7a1e3dfafff6136d"
+          }
+        },
+        {
           "client_id": "851253923883-oktn1i49m10us6urfbcv2h2f9ae52sn5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

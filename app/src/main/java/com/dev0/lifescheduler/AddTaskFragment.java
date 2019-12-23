@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-class AddTaskFragment extends Fragment {
+public class AddTaskFragment extends Fragment {
     private AppCompatEditText editText;
     private AppCompatButton doneBtn;
     private Task mTask;

@@ -37,7 +37,7 @@ public class TimerActivity extends AppCompatActivity {
     private long mEndTime;
 
     private ActionEntity action;
-    private static final String KEY_ACTION_ID = "ACTION_ID";
+    public static final String KEY_ACTION_ID = "ACTION_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Bundle bundle = new Bundle();
-        action.setId(bundle.getInt(KEY_ACTION_ID));
+        action.setId(bundle.getLong(KEY_ACTION_ID));
 
 
         mTextViewCountDown = findViewById(R.id.text_view_countdown);

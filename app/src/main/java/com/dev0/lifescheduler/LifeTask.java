@@ -3,21 +3,22 @@ package com.dev0.lifescheduler;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Task {
+public class LifeTask {
     private String mName;
     private long mId;
     private boolean mIsStrict = false;
+    private boolean mIsComplete = false;
     private Calendar mDateTime = Calendar.getInstance();
 
-    Task() {
+    LifeTask() {
         mName = "";
     }
 
-    Task(String name) {
+    LifeTask(String name) {
         mName = name;
     }
 
-    Task(String name, long id) {
+    LifeTask(String name, long id) {
         mName = name;
         mId = id;
     }
@@ -42,32 +43,48 @@ public class Task {
         mDateTime.set(year, month, monthOfDay);
     }
 
-    String getDate() {
+    public String getDate() {
         return SimpleDateFormat.getDateInstance().format(mDateTime.getTime());
     }
 
-    void setDate(Calendar date) {
+    public void setDate(Calendar date) {
         mDateTime = date;
     }
 
-    Calendar getCalendar() {
+    public Calendar getCalendar() {
         return mDateTime;
     }
 
-    void setTime(int hourOfDay, int minute) {
+    public void setTime(int hourOfDay, int minute) {
         mDateTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
         mDateTime.set(Calendar.MINUTE, minute);
     }
 
-    String getTime() {
+    public String getTime() {
         return SimpleDateFormat.getTimeInstance().format(mDateTime.getTime());
     }
 
-    boolean isStrict() {
+    public boolean isStrict() {
         return mIsStrict;
     }
 
-    void setStrict(boolean isStrict) {
+    public void setStrict(boolean isStrict) {
         mIsStrict = isStrict;
+    }
+
+    public boolean isComplete() {
+        return mIsComplete;
+    }
+
+    public void setCompletion(boolean isComplete) {
+        mIsComplete = isComplete;
+    }
+
+    public boolean isExpired() {
+        if (mIsStrict && !mIsComplete) {
+            if (Calendar.getInstance().compareTo(mDateTime) > 0)
+                return true;
+        }
+        return false;
     }
 }

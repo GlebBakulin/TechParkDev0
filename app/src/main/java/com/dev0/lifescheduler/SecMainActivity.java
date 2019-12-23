@@ -26,7 +26,7 @@ public class SecMainActivity extends AppCompatActivity {
 
         String actionFragmentTag = "action_fragment";
         String taskFragmentTag = "task_fragment";
-        String loginFragmentTag = "login_fragment";
+        String recordFragmentTag = "record_fragment";
 
         navbar = findViewById(R.id.bottom_navigation);
         navbar.setOnNavigationItemSelectedListener(menuItem -> {
@@ -56,16 +56,15 @@ public class SecMainActivity extends AppCompatActivity {
                         manager.beginTransaction().show(currentFragment).commit();
                     }
                     break;
-                case R.id.action_menu_together:
-                    if (manager.findFragmentByTag("login_fragment") == null) {
-                        currentFragment = new LoginFragment();
+                case R.id.action_menu_record:
+                    if (manager.findFragmentByTag(recordFragmentTag) == null) {
+                        currentFragment = new RecordFragment();
                         manager.beginTransaction()
-                                .add(R.id.frame_layout, currentFragment, loginFragmentTag).commit();
+                                .add(R.id.frame_layout, currentFragment, recordFragmentTag).commit();
                     } else {
-                        currentFragment = manager.findFragmentByTag(loginFragmentTag);
+                        currentFragment = manager.findFragmentByTag(recordFragmentTag);
                         manager.beginTransaction().show(currentFragment).commit();
                     }
-                    break;
             }
 
             return true;

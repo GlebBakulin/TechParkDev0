@@ -2,28 +2,28 @@ package com.dev0.lifescheduler.Models;
 
 import androidx.lifecycle.ViewModel;
 
-import com.dev0.lifescheduler.Task;
+import com.dev0.lifescheduler.LifeTask;
 import com.dev0.lifescheduler.TaskListFragment;
 
 public class AddTaskViewModel extends ViewModel {
     private TaskListFragment.TaskDataAdapter mAdapter;
-    private Task mTask = null;
+    private LifeTask mLifeTask = null;
 
     public void setAdapter(TaskListFragment.TaskDataAdapter adapter) {
         mAdapter = adapter;
     }
 
     public void addTaskToList() {
-        if (!mAdapter.contains(mTask))
-            mAdapter.addTask(mTask);
+        if (!mAdapter.contains(mLifeTask))
+            mAdapter.addTask(mLifeTask);
         mAdapter.notifyDataSetChanged();
     }
 
-    public Task getTask() {
-        return mTask;
+    public LifeTask getTask() {
+        return mLifeTask;
     }
 
-    public void setTask(Task task) {
-        mTask = task;
+    public void setTask(LifeTask lifeTask) {
+        mLifeTask = lifeTask;
     }
 }

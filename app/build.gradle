@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.dev0.lifescheduler"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -38,10 +38,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.2.1'
     implementation 'com.google.firebase:firebase-analytics:17.2.1'
 
-    implementation 'com.google.firebase:firebase-auth:17.+'
-    implementation 'com.google.firebase:firebase-database:17.+'
-    implementation 'com.android.support:design:29.+'
-    implementation 'com.android.support:cardview-v7:29.+'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-database:19.2.0'
+    implementation 'com.android.support:design:29'
+    implementation 'com.android.support:cardview-v7:29'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4' //Стили полей ввода
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'  //Работа со шрифтами
     implementation 'androidx.appcompat:appcompat:1.1.0'

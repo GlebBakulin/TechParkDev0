@@ -7,4 +7,5 @@
     <color name="button_sign_in">#28e028</color>
     <color name="button_sign_in_stroke">#12CA12</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="grey">#BBBBBB</color>
 </resources>

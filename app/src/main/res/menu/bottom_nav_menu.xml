@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:labelVisibilityMode="labeled">
 
     <item
         android:id="@+id/action_menu_task"
         android:enabled="true"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_tasks"/>
+        android:title="@string/title_tasks"
+        app:labelVisibilityMode="labeled" />
 
     <item
         android:id="@+id/action_menu_action"
         android:enabled="true"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_activities"/>
+        android:title="@string/title_activities"
+        app:labelVisibilityMode="labeled" />
 
     <item
         android:id="@+id/action_menu_record"
         android:enabled="true"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_records"/>
+        android:title="@string/title_records"
+        app:labelVisibilityMode="labeled" />
 
     <item
         android:id="@+id/action_menu_together"
         android:enabled="false"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_together"/>
+        android:title="@string/title_together"
+        app:labelVisibilityMode="labeled" />
 
     <item
         android:id="@+id/action_menu_settings"
         android:enabled="false"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_settings"/>
+        android:title="@string/title_settings"
+        app:labelVisibilityMode="labeled" />
 
 </menu>

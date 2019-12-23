@@ -60,31 +60,39 @@ public class TaskListFragment extends Fragment {
     }
 
     public class TaskDataAdapter extends RecyclerView.Adapter<TaskViewHolder> {
-        private ArrayList<Task> mTasks;
+        private ArrayList<LifeTask> mLifeTasks;
 
         public TaskDataAdapter() {
-            mTasks = new ArrayList<>();
+            mLifeTasks = new ArrayList<>();
         }
 
-        TaskDataAdapter(ArrayList<Task> tasks) {
-            mTasks = tasks;
+        TaskDataAdapter(ArrayList<LifeTask> lifeTasks) {
+            mLifeTasks = new ArrayList<>();
+            for (LifeTask i : lifeTasks)
+                if (!i.isComplete())
+                    mLifeTasks.add(i);
         }
 
-        public boolean contains(Task task) {
-            return mTasks.contains(task);
+        public boolean contains(LifeTask lifeTask) {
+            return mLifeTasks.contains(lifeTask);
         }
 
-        public void addTask(Task task) {
-            mTasks.add(task);
-            task.setId(mDbHelper.insertTask(task));
+        public void addTask(LifeTask lifeTask) {
+            mLifeTasks.add(lifeTask);
+            lifeTask.setId(mDbHelper.insertTask(lifeTask));
             notifyDataSetChanged();
-            notifyItemInserted(mTasks.size());
+            notifyItemInserted(mLifeTasks.size());
         }
 
+        void completeTask(int pos) {
+            mLifeTasks.get(pos).setCompletion(true);
+            mDbHelper.updateTask(mLifeTasks.get(pos).getId(), DBHelper.TASKS_COL_IS_DONE, 1);
+            mLifeTasks.remove(pos);
+            notifyItemRemoved(pos);
+        }
         void removeTask(int pos) {
-            mDbHelper.deleteTask(mTasks.get(pos).getId());
-            mTasks.remove(pos);
-            notifyDataSetChanged();
+            mDbHelper.deleteTask(mLifeTasks.get(pos).getId());
+            mLifeTasks.remove(pos);
             notifyItemRemoved(pos);
         }
 
@@ -99,14 +107,14 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-            Task task = mTasks.get(position);
-            holder.mName.setText(task.getName());
-            holder.mDate.setText(task.getDate());
-            holder.mTime.setText(task.getTime());
-            holder.mTaskDoneBtn.setOnClickListener(v -> removeTask(position));
+            LifeTask lifeTask = mLifeTasks.get(position);
+            holder.mName.setText(lifeTask.getName());
+            holder.mDate.setText(lifeTask.getDate());
+            holder.mTime.setText(lifeTask.getTime());
+            holder.mTaskDoneBtn.setOnClickListener(v -> completeTask(position));
             holder.mTaskEditBtn.setOnClickListener(v -> {
                 AddTaskViewModel vm = ViewModelProviders.of(getActivity()).get(AddTaskViewModel.class);
-                vm.setTask(task);
+                vm.setTask(lifeTask);
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.task_add_container, new AddTaskFragment(), null)
@@ -116,7 +124,7 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mTasks.size();
+            return mLifeTasks.size();
         }
     }
 

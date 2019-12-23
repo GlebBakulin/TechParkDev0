@@ -93,21 +93,23 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.make(root, "Длина пароля не менее 6 символов", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                startActivity(new Intent(MainActivity.this, SecMainActivity.class));
                 auth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                startActivity(new Intent(MainActivity.this, SecMainActivity.class));  //Вход на пустую страницу, заглушка
+                                Log.d("firebase1", "logged in");
+                                startActivity(new Intent(MainActivity.this, SecMainActivity.class));
+
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.d("firebase1", "not logged");
                         Snackbar.make(root, "Ошибка авторизции! "+e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
-                }).addOnCanceledListener(() ->
-                        Log.d("firebase", "cancelled")
-                );
+                });
             }
 
         });

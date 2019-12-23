@@ -29,7 +29,7 @@ public class AddTaskFragment extends Fragment {
     private AppCompatButton dateBtn;
     private AppCompatButton timeBtn;
     private AppCompatButton typeBtn;
-    private Task mTask;
+    private LifeTask mLifeTask;
     private InputMethodManager mImm;
     private AddTaskViewModel mAddTaskModel;
 
@@ -49,10 +49,10 @@ public class AddTaskFragment extends Fragment {
     }
 
     private DatePickerDialog.OnDateSetListener datePickerListener = (DatePicker view, int year, int month, int dayOfMonth) -> {
-        mTask.setDate(year, month, dayOfMonth);
+        mLifeTask.setDate(year, month, dayOfMonth);
     };
     private TimePickerDialog.OnTimeSetListener timePickerListener = (TimePicker view, int hourOfDay, int minute) -> {
-        mTask.setTime(hourOfDay, minute);
+        mLifeTask.setTime(hourOfDay, minute);
     };
 
     @Override
@@ -89,16 +89,16 @@ public class AddTaskFragment extends Fragment {
         editText = rootView.findViewById(R.id.task_add_edit_text);
 
         mAddTaskModel = ViewModelProviders.of(getActivity()).get(AddTaskViewModel.class);
-        mTask = mAddTaskModel.getTask();
-        if (mTask != null) {
-            editText.setText(mTask.getName());
+        mLifeTask = mAddTaskModel.getTask();
+        if (mLifeTask != null) {
+            editText.setText(mLifeTask.getName());
         } else {
-            mTask = new Task();
-            mAddTaskModel.setTask(mTask);
+            mLifeTask = new LifeTask();
+            mAddTaskModel.setTask(mLifeTask);
         }
 
         doneBtn.setOnClickListener(v -> {
-            mTask.setName(editText.getText().toString());
+            mLifeTask.setName(editText.getText().toString());
 
             mAddTaskModel.addTaskToList();
             mAddTaskModel.setTask(null);
@@ -110,7 +110,7 @@ public class AddTaskFragment extends Fragment {
         });
 
         dateBtn.setOnClickListener(v -> {
-            Calendar tc = mTask.getCalendar();
+            Calendar tc = mLifeTask.getCalendar();
             new DatePickerDialog(getActivity(), datePickerListener,
                     tc.get(Calendar.YEAR), tc.get(Calendar.MONTH), tc.get(Calendar.DAY_OF_MONTH)).show();
         });
@@ -118,8 +118,8 @@ public class AddTaskFragment extends Fragment {
             new TimePickerDialog(getActivity(), timePickerListener, 0, 0, true).show();
         });
         typeBtn.setOnClickListener(v -> {
-            mTask.setStrict(!mTask.isStrict());
-            if (mTask.isStrict())
+            mLifeTask.setStrict(!mLifeTask.isStrict());
+            if (mLifeTask.isStrict())
                 typeBtn.setText(R.string.title_task_type_strict);
             else
                 typeBtn.setText(R.string.title_task_type_lax);

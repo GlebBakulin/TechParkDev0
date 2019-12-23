@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dev0.lifescheduler.database.entity.ActionEntity;
+
 import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
@@ -24,23 +26,37 @@ public class TimerActivity extends AppCompatActivity {
     private Button mButtonStartPause;
     private Button mButtonReset;
     private Button mButtonSet;
+    private Button mButtonSave;
 
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
+    private EditText mTimerActivityName;
+    private EditText mTimerActivityComment;
     private long mTimeLeftInMillis;
     private long mEndTime;
+
+    private ActionEntity action;
+    private static final String KEY_ACTION_ID = "ACTION_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Bundle bundle = new Bundle();
+        bundle.getInt(KEY_ACTION_ID);
+
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
         mButtonStartPause = findViewById(R.id.button_start_pause);
         mButtonReset = findViewById(R.id.button_reset);
         mEditTextInput = findViewById(R.id.edit_text_input);
 
+        mTimerActivityName = findViewById(R.id.timer_activity_name);
+        mTimerActivityComment = findViewById(R.id.timer_activity_comment);
+
+
         mButtonSet = findViewById(R.id.button_set);
+        mButtonSave = findViewById(R.id.button_save);
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +88,13 @@ public class TimerActivity extends AppCompatActivity {
             }
 
 
+        });
+
+        mButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApplicationScheduler.getInstance().getDatabase().actionDao().update();
+            }
         });
 
         mButtonReset.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +133,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
 
-
     private void pauseTimer() {
         mCountDownTimer.cancel();
         mTimerRunning = false;
@@ -124,7 +146,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateCountDownText() {
-        int hours = (int)  (mTimeLeftInMillis / 1000) / 3600;
+        int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
         int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
 
@@ -138,12 +160,11 @@ public class TimerActivity extends AppCompatActivity {
         }
 
 
-
         mTextViewCountDown.setText(timeLeftFormatted);
     }
 
     private void updateWatchInterface() {
-        if (mTimerRunning){
+        if (mTimerRunning) {
             mEditTextInput.setVisibility(View.INVISIBLE);
             mButtonSet.setVisibility(View.INVISIBLE);
             mButtonReset.setVisibility(View.INVISIBLE);
@@ -153,7 +174,7 @@ public class TimerActivity extends AppCompatActivity {
             mButtonSet.setVisibility(View.VISIBLE);
             mButtonStartPause.setText("Start");
 
-            if(mTimeLeftInMillis < 1000){
+            if (mTimeLeftInMillis < 1000) {
                 mButtonStartPause.setVisibility(View.INVISIBLE);
             } else {
                 mButtonStartPause.setVisibility(View.VISIBLE);
@@ -207,11 +228,11 @@ public class TimerActivity extends AppCompatActivity {
 //        mTimeLeftInMillis = prefs.getLong("endTime", mEndTime);
         updateCountDownText();
         updateWatchInterface();
-        if(mTimerRunning) {
+        if (mTimerRunning) {
             mEndTime = prefs.getLong("endTime", 0);
             mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
 
-            if (mTimeLeftInMillis < 0){
+            if (mTimeLeftInMillis < 0) {
                 mTimeLeftInMillis = 0;
                 mTimerRunning = false;
                 updateCountDownText();

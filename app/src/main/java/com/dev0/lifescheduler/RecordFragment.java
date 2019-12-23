@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.dev0.lifescheduler.Models.AddTaskViewModel;
 
 public class RecordFragment extends Fragment {
     RecordDataAdapter mAdapter;
@@ -31,6 +34,8 @@ public class RecordFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new RecordDataAdapter(mDBHelper.getAllTasks());
         recyclerView.setAdapter(mAdapter);
+        AddTaskViewModel addTaskVM = ViewModelProviders.of(getActivity()).get(AddTaskViewModel.class);
+        addTaskVM.setRecordDataAdapter(mAdapter);
         return rootView;
     }
 

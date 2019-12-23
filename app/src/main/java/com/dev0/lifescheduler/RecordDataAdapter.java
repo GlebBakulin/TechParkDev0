@@ -19,10 +19,15 @@ public class RecordDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public RecordDataAdapter(ArrayList<LifeTask> tasks) {
         mObjects = new ArrayList<>();
+        setData(tasks);
 
+    }
+
+    public void setData(ArrayList<LifeTask> tasks) {
+        mObjects.clear();
         tasks.stream()
                 .filter(t -> t.isComplete())
-                .sorted(Comparator.comparing(LifeTask::getCalendar))
+                .sorted(Comparator.comparing(LifeTask::getCalendar).reversed())
                 .collect(Collectors.groupingBy(LifeTask::getDate))
                 .forEach((key, val) -> {
                     mObjects.add(key);

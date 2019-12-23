@@ -10,7 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-class DBHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper {
+    private boolean mIsTaskUpdated = false;
+
     static final String DATABASE_NAME = "appdb.db";
     static final String TASKS_TABLE_NAME = "tasks";
     static final String TASKS_COL_ID = "id";
@@ -92,14 +94,15 @@ class DBHelper extends SQLiteOpenHelper {
         else if (val instanceof String)
             cv.put(col, (String) val);
         db.update(TASKS_TABLE_NAME, cv, "id = ?", new String[] { Long.toString(id) });
+        mIsTaskUpdated = true;
     }
 
-    long deleteTask(long id) {
+    public long deleteTask(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TASKS_TABLE_NAME, "id = ?", new String[] { Long.toString(id) });
     }
 
-    ArrayList<LifeTask> getAllTasks() {
+    public ArrayList<LifeTask> getAllTasks() {
         ArrayList<LifeTask> lifeTaskList = new ArrayList<>();
 
         SQLiteDatabase db = getReadableDatabase();
@@ -133,5 +136,9 @@ class DBHelper extends SQLiteOpenHelper {
         }
 
         return lifeTaskList;
+    }
+
+    public boolean isTaskUpdated() {
+        return mIsTaskUpdated;
     }
 }

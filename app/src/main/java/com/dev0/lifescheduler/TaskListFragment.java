@@ -41,7 +41,8 @@ public class TaskListFragment extends Fragment {
         mAdapter = new TaskDataAdapter(mDbHelper.getAllTasks());
         recyclerView.setAdapter(mAdapter);
         AddTaskViewModel addTaskVM = ViewModelProviders.of(getActivity()).get(AddTaskViewModel.class);
-        addTaskVM.setAdapter(mAdapter);
+        addTaskVM.setTaskListAdapter(mAdapter);
+        addTaskVM.setDBHelper(mDbHelper);
 
         FloatingActionButton addTaskButton = rootView.findViewById(R.id.action_add_task);
 
@@ -88,6 +89,8 @@ public class TaskListFragment extends Fragment {
             mLifeTasks.get(pos).setCompletion(true);
             mDbHelper.updateTask(mLifeTasks.get(pos).getId(), DBHelper.TASKS_COL_IS_DONE, 1);
             mLifeTasks.remove(pos);
+            AddTaskViewModel addTaskVM = ViewModelProviders.of(getActivity()).get(AddTaskViewModel.class);
+            addTaskVM.updateTask();
             notifyItemRemoved(pos);
         }
         void removeTask(int pos) {

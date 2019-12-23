@@ -13,9 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dev0.lifescheduler.database.database.ActionDB;
+import com.dev0.lifescheduler.database.entity.ActionEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActionListFragment extends Fragment {
 
@@ -47,7 +50,7 @@ public class ActionListFragment extends Fragment {
 
         FloatingActionButton addActionButton = rootView.findViewById(R.id.action_add_action);
         addActionButton.setOnClickListener(v -> mAdapter.addAction());
-
+        mAdapter.loadActions(ActionDB.getDB().actionDao().getAll());
         return rootView;
     }
 
@@ -58,15 +61,23 @@ public class ActionListFragment extends Fragment {
     }
 
     class ActionDataAdapter extends RecyclerView.Adapter<ActionViewHolder> {
-        private ArrayList<Action> mActions;
+        private List<ActionEntity> mActions;
 
         ActionDataAdapter() {
             mActions = new ArrayList<>();
         }
 
         void addAction() {
-            mActions.add(new Action("Action name", "Action description"));
+            ActionEntity actionEntity = new ActionEntity();
+            actionEntity.setActionDesctription("no description");
+            actionEntity.setActionName("no action title");
+            ActionDB.getDB().actionDao().insert(actionEntity);
+            mActions.add(actionEntity);
             notifyItemInserted(mActions.size());
+        }
+
+        void loadActions(List<ActionEntity> actionEntities) {
+            mActions = actionEntities;
         }
 
         void setSize(int size) {

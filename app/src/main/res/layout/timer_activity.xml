@@ -14,9 +14,8 @@
 
     <EditText
         android:id="@+id/timer_activity_comment"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/edit_text_input"
         android:layout_below="@+id/timer_activity_name"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="140dp"

@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class ActionEntity {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey (autoGenerate = true)
     public long id;
 
     public long getId() {

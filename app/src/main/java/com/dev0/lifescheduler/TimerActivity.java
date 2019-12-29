@@ -96,7 +96,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 action.setActionName(mTimerActivityName.getText().toString());
-                action.setActionName(mTimerActivityComment.getText().toString());
+                action.setActionDesctription(mTimerActivityComment.getText().toString());
                 ActionDB.getDB().actionDao().update(action);
             }
         });
@@ -195,6 +195,8 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState);
+        outState.putString("activityName", mTimerActivityName.toString());
+//        outState.putString("activityName", mTimerActivityName.toString());
         outState.putLong("millisLeft", mTimeLeftInMillis);
         outState.putBoolean("timerRunning", mTimerRunning);
         outState.putLong("endTime", mEndTime);
@@ -208,7 +210,7 @@ public class TimerActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putLong("startTimeInMilis", mStartTimeInMillis);
+        editor.putLong("startTimeInMillis", mStartTimeInMillis);
         editor.putLong("millisLeft", mTimeLeftInMillis);
         editor.putBoolean("timerRunning", mTimerRunning);
         editor.putLong("endTime", mEndTime);

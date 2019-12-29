@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +45,7 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_activity);
         action = new ActionEntity();
-        Bundle bundle = new Bundle();
+        Bundle bundle = getIntent().getExtras();
         action.setId(bundle.getLong(KEY_ACTION_ID));
 
 
@@ -97,6 +98,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 action.setActionName(mTimerActivityName.getText().toString());
                 action.setActionDesctription(mTimerActivityComment.getText().toString());
+                Log.v("====DEBUG====", "Name: " + action.actionName + " Id: " + action.getId());
                 ActionDB.getDB().actionDao().update(action);
             }
         });

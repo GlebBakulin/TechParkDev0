@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase db;
     DatabaseReference users;
     RelativeLayout root;
+
+
+
+
 
 
     @Override
@@ -45,6 +50,32 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
+//
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user != null) {
+//            // Name, email address, and profile photo Url
+//        String name = user.getDisplayName();
+//        String email = user.getEmail();
+//        Uri photoUrl = user.getPhotoUrl();
+//
+//            // Check if user's email is verified
+//            boolean emailVerified = user.isEmailVerified();
+//
+//            // The user's ID, unique to the Firebase project. Do NOT use this value to
+//            // authenticate with your backend server, if you have one. Use
+//            // FirebaseUser.getIdToken() instead.
+//            String uid = user.getUid();
+//        }
+
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            // Check if user is signed in (non-null) and update UI accordingly.
+            FirebaseUser currentUser = auth.getCurrentUser();
+            updateUI(currentUser);
+        }
+
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +91,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
+
+
+
+
+
+
 
     private void openSignInWindow() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -92,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 auth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>()
+                        {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 startActivity(new Intent(MainActivity.this, SecMainActivity.class));  //Вход на пустую страницу, заглушка
@@ -101,8 +144,9 @@ public class MainActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Snackbar.make(root, "Ошибка авторизции! "+e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                         Snackbar.make(root, "Ошибка авторизции! "+e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
+
                 });
 
             }

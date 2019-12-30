@@ -100,7 +100,8 @@ public class AddTaskFragment extends Fragment {
         doneBtn.setOnClickListener(v -> {
             mLifeTask.setName(editText.getText().toString());
 
-            mAddTaskModel.addTaskToList();
+            if (mLifeTask.getName().length() > 0 && mLifeTask.getName().length() < 10)
+                mAddTaskModel.addTaskToList();
             mAddTaskModel.setTask(null);
             getActivity()
                     .getSupportFragmentManager()

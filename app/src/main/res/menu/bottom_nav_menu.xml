@@ -8,34 +8,30 @@
         android:enabled="true"
         android:icon="@drawable/list_icon"
         android:title="@string/title_tasks"
-        app:labelVisibilityMode="labeled" />
+        app:showAsAction="always|withText" />
 
     <item
         android:id="@+id/action_menu_action"
         android:enabled="true"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_activities"
-        app:labelVisibilityMode="labeled" />
+        android:title="@string/title_activities" />
 
     <item
         android:id="@+id/action_menu_record"
         android:enabled="true"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_records"
-        app:labelVisibilityMode="labeled" />
+        android:title="@string/title_records" />
 
     <item
         android:id="@+id/action_menu_together"
         android:enabled="false"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_together"
-        app:labelVisibilityMode="labeled" />
+        android:title="@string/title_together" />
 
     <item
         android:id="@+id/action_menu_settings"
         android:enabled="false"
         android:icon="@drawable/list_icon"
-        android:title="@string/title_settings"
-        app:labelVisibilityMode="labeled" />
+        android:title="@string/title_settings" />
 
 </menu>

@@ -25,4 +25,5 @@
 
     <string name="done_btn">DONE</string>
     <string name="edit_btn">EDIT</string>
+    <string name="clear_btn">CLEAR</string>
 </resources>

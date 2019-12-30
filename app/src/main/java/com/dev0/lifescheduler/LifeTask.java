@@ -21,6 +21,7 @@ public class LifeTask {
     LifeTask(String name, long id) {
         mName = name;
         mId = id;
+        mDateTime.setTimeInMillis(0);
     }
 
     void setName(String name) {

@@ -1,7 +1,7 @@
 package com.dev0.lifescheduler;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dev0.lifescheduler.database.database.ActionDB;
+import com.dev0.lifescheduler.database.entity.ActionEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActionListFragment extends Fragment {
 
@@ -47,7 +50,7 @@ public class ActionListFragment extends Fragment {
 
         FloatingActionButton addActionButton = rootView.findViewById(R.id.action_add_action);
         addActionButton.setOnClickListener(v -> mAdapter.addAction());
-
+        mAdapter.loadActions(ActionDB.getDB().actionDao().getAll());
         return rootView;
     }
 
@@ -57,16 +60,24 @@ public class ActionListFragment extends Fragment {
         outState.putInt("size", mAdapter.getItemCount());
     }
 
-    class ActionDataAdapter extends RecyclerView.Adapter<ActionViewHolder> {
-        private ArrayList<Action> mActions;
+    class ActionDataAdapter extends RecyclerView.Adapter<ActionDataAdapter.ActionViewHolder> {
+        private List<ActionEntity> mActions;
 
         ActionDataAdapter() {
             mActions = new ArrayList<>();
         }
 
         void addAction() {
-            mActions.add(new Action("Action name", "Action description"));
+            ActionEntity actionEntity = new ActionEntity();
+            actionEntity.setActionDesctription("no description");
+            actionEntity.setActionName("no action title");
+            ActionDB.getDB().actionDao().insert(actionEntity);
+            mActions.add(actionEntity);
             notifyItemInserted(mActions.size());
+        }
+
+        void loadActions(List<ActionEntity> actionEntities) {
+            mActions = actionEntities;
         }
 
         void setSize(int size) {
@@ -93,17 +104,28 @@ public class ActionListFragment extends Fragment {
         public int getItemCount() {
             return mActions.size();
         }
-    }
 
-    class ActionViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mName;
-        private final TextView mDescription;
 
-        ActionViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public class ActionViewHolder extends RecyclerView.ViewHolder {
+            private final TextView mName;
+            private final TextView mDescription;
 
-            mName = itemView.findViewById(R.id.action_list_item_name);
-            mDescription = itemView.findViewById(R.id.action_list_item_description);
+            ActionViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                // TODO Переписать красиво
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putLong(TimerActivity.KEY_ACTION_ID, mActions.get(getAdapterPosition()).getId());
+                        startActivity(new Intent(getContext(), TimerActivity.class).putExtras(bundle));
+                    }
+                });
+
+                mName = itemView.findViewById(R.id.action_list_item_name);
+                mDescription = itemView.findViewById(R.id.action_list_item_description);
+            }
         }
     }
 }

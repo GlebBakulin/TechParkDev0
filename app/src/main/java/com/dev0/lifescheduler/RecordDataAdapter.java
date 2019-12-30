@@ -10,29 +10,52 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RecordDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     final int TYPE_DATE = 0;
     final int TYPE_TASK = 1;
     private ArrayList<Object> mObjects;
+    private ArrayList<LifeTask> mTasks;
+    private DBHelper db;
 
-    public RecordDataAdapter(ArrayList<LifeTask> tasks) {
+    public RecordDataAdapter(ArrayList<LifeTask> tasks, DBHelper helper) {
         mObjects = new ArrayList<>();
+        mTasks = new ArrayList<>();
+        db = helper;
         setData(tasks);
-
     }
 
     public void setData(ArrayList<LifeTask> tasks) {
         mObjects.clear();
-        tasks.stream()
-                .filter(t -> t.isComplete())
+        mTasks.clear();
+        for (LifeTask t : tasks)
+            if (t.isComplete())
+                mTasks.add(t);
+
+        mTasks.stream()
                 .sorted(Comparator.comparing(LifeTask::getCalendar).reversed())
                 .collect(Collectors.groupingBy(LifeTask::getDate))
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, List<LifeTask>>comparingByKey().reversed())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new))
                 .forEach((key, val) -> {
                     mObjects.add(key);
                     mObjects.addAll(val);
                 });
+    }
+
+    public void clear() {
+        for (LifeTask t : mTasks)
+            db.deleteTask(t.getId());
+        mTasks.clear();
+        mObjects.clear();
+        notifyDataSetChanged();
     }
 
     @NonNull

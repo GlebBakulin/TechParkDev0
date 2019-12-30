@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.dev0.lifescheduler.Models.AddTaskViewModel;
 public class RecordFragment extends Fragment {
     RecordDataAdapter mAdapter;
     DBHelper mDBHelper;
+    AppCompatButton clearBtn;
 
 
     @Override
@@ -29,13 +31,17 @@ public class RecordFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_record, container, false);
-        RecyclerView recyclerView = rootView.findViewById(R.id.records);
 
+        RecyclerView recyclerView = rootView.findViewById(R.id.records);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new RecordDataAdapter(mDBHelper.getAllTasks());
+        mAdapter = new RecordDataAdapter(mDBHelper.getAllTasks(), mDBHelper);
         recyclerView.setAdapter(mAdapter);
         AddTaskViewModel addTaskVM = ViewModelProviders.of(getActivity()).get(AddTaskViewModel.class);
         addTaskVM.setRecordDataAdapter(mAdapter);
+
+        clearBtn = rootView.findViewById(R.id.record_btn_clear);
+        clearBtn.setOnClickListener(l -> mAdapter.clear());
+
         return rootView;
     }
 

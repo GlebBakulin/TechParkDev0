@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,28 +20,32 @@ import com.dev0.lifescheduler.database.entity.ActionEntity;
 import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
-    public static final String KEY_ACTION_ID = "ACTION_ID";
     private long mStartTimeInMillis;
+
     private EditText mEditTextInput;
+
     private TextView mTextViewCountDown;
     private Button mButtonStartPause;
     private Button mButtonReset;
     private Button mButtonSet;
     private Button mButtonSave;
+
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
     private EditText mTimerActivityName;
     private EditText mTimerActivityComment;
     private long mTimeLeftInMillis;
     private long mEndTime;
+
     private ActionEntity action;
+    public static final String KEY_ACTION_ID = "ACTION_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_activity);
         action = new ActionEntity();
-        Bundle bundle = new Bundle();
+        Bundle bundle = getIntent().getExtras();
         action.setId(bundle.getLong(KEY_ACTION_ID));
 
 
@@ -92,7 +97,8 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 action.setActionName(mTimerActivityName.getText().toString());
-//                action.setActionName(mTimerActivityComment.getText().toString());
+                action.setActionDesctription(mTimerActivityComment.getText().toString());
+                Log.v("====DEBUG====", "Name: " + action.actionName + " Id: " + action.getId());
                 ActionDB.getDB().actionDao().update(action);
             }
         });
@@ -191,6 +197,8 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState);
+        outState.putString("activityName", mTimerActivityName.toString());
+//        outState.putString("activityName", mTimerActivityName.toString());
         outState.putLong("millisLeft", mTimeLeftInMillis);
         outState.putBoolean("timerRunning", mTimerRunning);
         outState.putLong("endTime", mEndTime);
@@ -204,7 +212,7 @@ public class TimerActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putLong("startTimeInMilis", mStartTimeInMillis);
+        editor.putLong("startTimeInMillis", mStartTimeInMillis);
         editor.putLong("millisLeft", mTimeLeftInMillis);
         editor.putBoolean("timerRunning", mTimerRunning);
         editor.putLong("endTime", mEndTime);

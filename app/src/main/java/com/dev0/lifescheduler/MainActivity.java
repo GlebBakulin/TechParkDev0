@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,9 +17,9 @@ import com.dev0.lifescheduler.Models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -43,10 +42,26 @@ public class MainActivity extends AppCompatActivity {
         buttonRegister=findViewById(R.id.buttonRegister);
         root = findViewById(R.id.root_element);
 
-        FirebaseApp.initializeApp(this);
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+//        Uri photoUrl = user.getPhotoUrl();
+
+            // Check if user's email is verified
+            boolean emailVerified = user.isEmailVerified();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            String uid = user.getUid();
+        }
+
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +77,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = auth.getCurrentUser();
+//        updateUI(currentUser);
+    }
+
+
+//    private void updateUI(FirebaseUser user) {
+//        hideProgressDialog();
+//        if (user != null) {
+//            mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
+//            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+//
+//            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+//        } else {
+//            mStatusTextView.setText(R.string.signed_out);
+//            mDetailTextView.setText(null);
+//
+//            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+//        }
+//    }
+
 
     private void openSignInWindow() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -93,23 +136,21 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.make(root, "Длина пароля не менее 6 символов", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
-                startActivity(new Intent(MainActivity.this, SecMainActivity.class));
                 auth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                Log.d("firebase1", "logged in");
-                                startActivity(new Intent(MainActivity.this, SecMainActivity.class));
-
+                                startActivity(new Intent(MainActivity.this, SecMainActivity.class));  //Вход на пустую страницу, заглушка
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("firebase1", "not logged");
-                        Snackbar.make(root, "Ошибка авторизции! "+e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(root, "Ошибка авторизции! " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
+
                 });
+
             }
 
         });

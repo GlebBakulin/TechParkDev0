@@ -96,8 +96,8 @@ public class ActionListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ActionViewHolder holder, int position) {
-            holder.mName.setText("Action name");  // Заглушка
-            holder.mDescription.setText("Action description");
+            holder.mName.setText(mActions.get(position).getActionName());  // Заглушка
+            holder.mDescription.setText(mActions.get(position).getActionDesctription());
         }
 
         @Override

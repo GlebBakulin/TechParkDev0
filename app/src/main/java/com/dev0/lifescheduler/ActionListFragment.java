@@ -78,8 +78,7 @@ public class ActionListFragment extends Fragment {
             actionEntity.setActionDesctription("no description");
             actionEntity.setActionName("no action title");
             ActionDB.getDB().actionDao().insert(actionEntity);
-            mActions.add(actionEntity);
-            notifyItemInserted(mActions.size());
+            loadActions(ActionDB.getDB().actionDao().getAll());
         }
 
         void loadActions(List<ActionEntity> actionEntities) {
@@ -119,17 +118,12 @@ public class ActionListFragment extends Fragment {
 
             ActionViewHolder(@NonNull View itemView) {
                 super(itemView);
-
-                // TODO Переписать красиво
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putLong(TimerActivity.KEY_ACTION_ID, mActions.get(getAdapterPosition()).getId());
-                        startActivity(new Intent(getContext(), TimerActivity.class).putExtras(bundle));
-                    }
+                //TODO: Сделать красиво
+                itemView.setOnClickListener(l -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(TimerActivity.KEY_ACTION_ID, mActions.get(getAdapterPosition()).getId());
+                    startActivity(new Intent(getContext(), TimerActivity.class).putExtras(bundle));
                 });
-
                 mName = itemView.findViewById(R.id.action_list_item_name);
                 mDescription = itemView.findViewById(R.id.action_list_item_description);
             }

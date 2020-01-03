@@ -12,7 +12,7 @@
         android:id="@+id/timer_activity_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Введите имя активности" />
+        android:hint="@string/hint_input_act_name" />
 
 
     <EditText
@@ -22,7 +22,24 @@
         android:layout_below="@+id/timer_activity_name"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="10dp"
-        android:hint="Введите описание активности" />
+        android:hint="@string/hint_input_act_description" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timer_activity_comment"
+        android:layout_margin="20dp"
+        android:text="@string/save_btn" />
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timer_activity_comment"
+        android:layout_margin="20dp"
+        android:layout_toEndOf="@id/button_save"
+        android:text="@string/delete_btn" />
 
     <EditText
         android:id="@+id/edit_text_input"
@@ -30,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/text_view_countdown"
-        android:hint="Minutes"
+        android:hint="@string/hint_minutes"
         android:inputType="number"
         android:maxLength="4" />
 
@@ -40,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/edit_text_input"
         android:layout_toEndOf="@id/edit_text_input"
-        android:text="Set" />
+        android:text="@string/set_btn" />
 
     <TextView
         android:id="@+id/text_view_countdown"
@@ -48,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="00:00"
+        android:text="@string/hint_zero_time"
         android:textColor="@android:color/black"
         android:textSize="60sp" />
 
@@ -58,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_view_countdown"
         android:layout_centerHorizontal="true"
-        android:text="Start" />
+        android:text="@string/start_btn" />
 
     <Button
         android:id="@+id/button_reset"
@@ -67,16 +84,8 @@
         android:layout_below="@+id/text_view_countdown"
         android:layout_marginStart="11dp"
         android:layout_toEndOf="@id/button_start_pause"
-        android:text="Reset"
+        android:text="@string/reset_btn"
         android:visibility="invisible"
         tools:visibility="visible" />
-
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timer_activity_comment"
-        android:layout_margin="20dp"
-        android:text="Save" />
 
 </RelativeLayout>

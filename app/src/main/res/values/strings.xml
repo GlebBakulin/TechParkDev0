@@ -26,4 +26,16 @@
     <string name="done_btn">DONE</string>
     <string name="edit_btn">EDIT</string>
     <string name="clear_btn">CLEAR</string>
+
+    <string name="save_btn">SAVE</string>
+    <string name="delete_btn">DELETE</string>
+    <string name="set_btn">SET</string>
+    <string name="start_btn">START</string>
+    <string name="reset_btn">RESET</string>
+    <string name="pause_btn">PAUSE</string>
+
+    <string name="hint_minutes">Minutes</string>
+    <string name="hint_zero_time">00:00</string>
+    <string name="hint_input_act_name">"Input activity name"</string>
+    <string name="hint_input_act_description">"Input activity description"</string>
 </resources>

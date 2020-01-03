@@ -32,6 +32,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button mButtonReset;
     private Button mButtonSet;
     private Button mButtonSave;
+    private Button mButtonDelete;
 
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
@@ -70,8 +71,10 @@ public class TimerActivity extends AppCompatActivity {
         mTimerActivityName.setText(action.getActionName());
         mTimerActivityComment.setText(action.getActionDesctription());
 
+
         mButtonSet = findViewById(R.id.button_set);
         mButtonSave = findViewById(R.id.button_save);
+        mButtonDelete = findViewById(R.id.button_delete);
 
 
         View.OnFocusChangeListener focusChangeListener = (v, hasFocus) -> {
@@ -111,8 +114,6 @@ public class TimerActivity extends AppCompatActivity {
                 setTime(millisInput);
                 mEditTextInput.setText("");
             }
-
-
         });
 
         mButtonSave.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +131,11 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 resetTimer();
             }
+        });
+
+        mButtonDelete.setOnClickListener(v -> {
+            ActionDB.getDB().actionDao().delete(action);
+            finish();
         });
     }
 
@@ -196,11 +202,11 @@ public class TimerActivity extends AppCompatActivity {
             mEditTextInput.setVisibility(View.INVISIBLE);
             mButtonSet.setVisibility(View.INVISIBLE);
             mButtonReset.setVisibility(View.INVISIBLE);
-            mButtonStartPause.setText("Pause");
+            mButtonStartPause.setText(R.string.pause_btn);
         } else {
             mEditTextInput.setVisibility(View.VISIBLE);
             mButtonSet.setVisibility(View.VISIBLE);
-            mButtonStartPause.setText("Start");
+            mButtonStartPause.setText(R.string.start_btn);
 
             if (mTimeLeftInMillis < 1000) {
                 mButtonStartPause.setVisibility(View.INVISIBLE);

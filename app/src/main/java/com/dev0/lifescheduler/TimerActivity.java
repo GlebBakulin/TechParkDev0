@@ -1,5 +1,6 @@
 package com.dev0.lifescheduler;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -7,6 +8,7 @@ import android.os.PersistableBundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -61,6 +63,16 @@ public class TimerActivity extends AppCompatActivity {
 
         mButtonSet = findViewById(R.id.button_set);
         mButtonSave = findViewById(R.id.button_save);
+
+        View.OnFocusChangeListener focusChangeListener = (v, hasFocus) -> {
+            if (!hasFocus)
+                hideKeyboard(v);
+        };
+
+        mEditTextInput.setOnFocusChangeListener(focusChangeListener);
+        mTimerActivityName.setOnFocusChangeListener(focusChangeListener);
+        mTimerActivityComment.setOnFocusChangeListener(focusChangeListener);
+
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,4 +263,10 @@ public class TimerActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }
+

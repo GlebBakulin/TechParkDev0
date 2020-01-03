@@ -47,9 +47,16 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_activity);
-        action = new ActionEntity();
         Bundle bundle = getIntent().getExtras();
-        action.setId(bundle.getLong(KEY_ACTION_ID));
+        long id = bundle.getLong(KEY_ACTION_ID);
+        action = ActionDB
+                .getDB()
+                .actionDao()
+                .getAll()
+                .stream()
+                .filter(e -> e.getId() == id)
+                .findAny()
+                .orElse(null);
 
 
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
@@ -60,15 +67,17 @@ public class TimerActivity extends AppCompatActivity {
         mTimerActivityName = findViewById(R.id.timer_activity_name);
         mTimerActivityComment = findViewById(R.id.timer_activity_comment);
 
+        mTimerActivityName.setText(action.getActionName());
+        mTimerActivityComment.setText(action.getActionDesctription());
 
         mButtonSet = findViewById(R.id.button_set);
         mButtonSave = findViewById(R.id.button_save);
+
 
         View.OnFocusChangeListener focusChangeListener = (v, hasFocus) -> {
             if (!hasFocus)
                 hideKeyboard(v);
         };
-
         mEditTextInput.setOnFocusChangeListener(focusChangeListener);
         mTimerActivityName.setOnFocusChangeListener(focusChangeListener);
         mTimerActivityComment.setOnFocusChangeListener(focusChangeListener);

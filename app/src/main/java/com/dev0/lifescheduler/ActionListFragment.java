@@ -55,6 +55,12 @@ public class ActionListFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.loadActions(ActionDB.getDB().actionDao().getAll());
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("size", mAdapter.getItemCount());
@@ -78,6 +84,7 @@ public class ActionListFragment extends Fragment {
 
         void loadActions(List<ActionEntity> actionEntities) {
             mActions = actionEntities;
+            notifyDataSetChanged();
         }
 
         void setSize(int size) {

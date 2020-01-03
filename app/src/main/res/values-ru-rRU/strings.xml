@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Life scheduler</string>
+    <string name="app_auth">Войдите или зарегистрируйтесь</string>
+    <string name="app_bottom">от dev0</string>
+    <string name="action_settings">Настройки</string>
+    <string name="buttonRegister">Регистрация</string>
+    <string name="buttonSignIn">Вход</string>
+    <string name="clear_btn">Очистить</string>
+    <string name="delete_btn">Удалить</string>
+    <string name="done_btn">Готово</string>
+    <string name="edit_btn">Редактировать</string>
+    <string name="hint_input_act_description">Введите описание активности</string>
+    <string name="hint_input_act_name">Введите название активности</string>
+    <string name="hint_minutes">Минуты</string>
+    <string name="pause_btn">Пауза</string>
+    <string name="reset_btn">Сброс</string>
+    <string name="save_btn">Сохранить</string>
+    <string name="set_btn">Установить</string>
+    <string name="start_btn">Начать</string>
+    <string name="title_activities">Активности</string>
+    <string name="title_task_date">Дата</string>
+    <string name="title_task_time">Время</string>
+    <string name="title_task_type_lax">Свободный</string>
+    <string name="title_task_type_strict">Строгий</string>
+    <string name="title_tasks">Задачи</string>
+    <string name="title_records">Записи</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_notifications">Уведомления</string>
+    <string name="title_home">Домой</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="snackbar_enter_email">"Введите почту"</string>
+    <string name="snackbar_password_short">Длина пароля не менее 6 символов</string>
+    <string name="snackbar_authorization_error">Ошибка авторизации! </string>
+    <string name="dialog_enter_data">Введите данные для регистрации</string>
+    <string name="dialog_add">Добавить</string>
+    <string name="snackbar_enter_name">Введите имя</string>
+    <string name="snackbar_enter_phone">Введите телефон</string>
+    <string name="snackbar_user_added">Пользователь добавлен!</string>
+    <string name="snackbar_registration_error">Ошибка регистрации! </string>
+    <string name="hint_phone">Телефон</string>
+    <string name="hint_name">Имя</string>
+    <string name="hint_password">Пароль</string>
+</resources>

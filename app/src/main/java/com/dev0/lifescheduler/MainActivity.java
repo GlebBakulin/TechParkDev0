@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openSignInWindow() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Войти");
+        dialog.setTitle(R.string.buttonSignIn);
 //        dialog.setMessage(" Введите данные для регистрации");
         LayoutInflater inflater = LayoutInflater.from(this);
         View signInWindow = inflater.inflate(R.layout.sign_in_window, null);
@@ -117,23 +117,23 @@ public class MainActivity extends AppCompatActivity {
         final MaterialEditText email = signInWindow.findViewById(R.id.emailField);
         final MaterialEditText pass = signInWindow.findViewById(R.id.passField);
 
-        dialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 dialogInterface.dismiss();
             }
         });
 
-        dialog.setPositiveButton("Войти", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(R.string.buttonSignIn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {    // Проверки ввода email и пароля
                 if(TextUtils.isEmpty(email.getText().toString())) {
-                    Snackbar.make(root, "Введите почту", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(root, R.string.snackbar_enter_email, Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(pass.getText().toString().length() < 6) {
-                    Snackbar.make(root, "Длина пароля не менее 6 символов", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(root, R.string.snackbar_password_short, Snackbar.LENGTH_SHORT).show();
                     return;
                 }
                 auth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
@@ -146,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Snackbar.make(root, "Ошибка авторизции! " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(root, R.string.snackbar_authorization_error
+                                + e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                 });
@@ -160,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void openRegisterWindow() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Регистрация");
-        dialog.setMessage(" Введите данные для регистрации");
+        dialog.setTitle(R.string.buttonRegister);
+        dialog.setMessage(R.string.dialog_enter_data);
         LayoutInflater inflater = LayoutInflater.from(this);
         View registerWindow = inflater.inflate(R.layout.register_window, null);
         dialog.setView(registerWindow);
@@ -171,33 +172,33 @@ public class MainActivity extends AppCompatActivity {
         final MaterialEditText name = registerWindow.findViewById(R.id.nameField);
         final MaterialEditText phone = registerWindow.findViewById(R.id.phoneField);
 
-        dialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 dialogInterface.dismiss();
             }
         });
 
-        dialog.setPositiveButton("Добавить", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(R.string.dialog_add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {    // Проверки ввода email, имени, телефона и пароля
                 if(TextUtils.isEmpty(email.getText().toString())) {
-                    Snackbar.make(root, "Введите почту", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(root, R.string.snackbar_enter_email, Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(TextUtils.isEmpty(name.getText().toString())) {
-                    Snackbar.make(root, "Введите имя", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(root, R.string.snackbar_enter_name, Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(TextUtils.isEmpty(phone.getText().toString())) {
-                    Snackbar.make(root, "Введите телефон", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(root, R.string.snackbar_enter_phone, Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(pass.getText().toString().length() < 6) {
-                    Snackbar.make(root, "Длина пароля не менее 6 символов", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(root, R.string.snackbar_password_short, Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {  //Установка всплывающего сообщения в Relative layout
-                                                Snackbar.make(root, "Пользователь добавлен!", Snackbar.LENGTH_SHORT).show();
+                                                Snackbar.make(root, R.string.snackbar_user_added, Snackbar.LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -226,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Snackbar.make(root, "Ошибка регистрации! "+e.getMessage(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(root, R.string.snackbar_registration_error + e.getMessage(), Snackbar.LENGTH_LONG).show();
                     }
                 });
 

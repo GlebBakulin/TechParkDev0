@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -117,7 +118,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+        mEndTime = SystemClock.elapsedRealtime() + mTimeLeftInMillis;
 
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
@@ -238,7 +239,7 @@ public class TimerActivity extends AppCompatActivity {
         updateWatchInterface();
         if (mTimerRunning) {
             mEndTime = prefs.getLong("endTime", 0);
-            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+            mTimeLeftInMillis = mEndTime - SystemClock.elapsedRealtime();
 
             if (mTimeLeftInMillis < 0) {
                 mTimeLeftInMillis = 0;
